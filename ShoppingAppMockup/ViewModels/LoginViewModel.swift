@@ -26,6 +26,17 @@ struct UserLogin  {
 
 class LoginViewModel : NSObject {
     
+    var loginCredential: UserLogin?
+    
+    //Profile data Access requirement
+    func validateLoginCredential(credential: UserLogin)->Bool{
+        if credential.userName != nil &&  credential.appAuth != nil{
+            return true
+        }
+        return false
+    }
+    
+    
     func validateUserInputs(txtUserName: UITextField?, txtPassword: UITextField?) throws {
         
         if let userName = txtUserName?.text{
@@ -48,9 +59,9 @@ class LoginViewModel : NSObject {
     
      func performLoginAction(_ uid: String, _ pwd: String, handler: @escaping(_ loginResponse: UserLogin?) -> Void){
   
-        let currentUserLogin = UserLogin(appAuth: "AXSGY458736587ghds", userName: "Some UserName", walletBalence: 19.0)
+        self.loginCredential = UserLogin(appAuth: "AXSGY458736587ghds", userName: "Some UserName", walletBalence: 19.0)
         
-        handler(currentUserLogin)
+        handler(self.loginCredential)
         
     }
     

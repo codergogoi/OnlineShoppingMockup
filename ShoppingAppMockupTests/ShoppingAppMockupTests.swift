@@ -2,7 +2,7 @@
 //  ShoppingAppMockupTests.swift
 //  ShoppingAppMockupTests
 //
-//  Created by MAC01 on 28/03/18.
+//  Created by Gogoi on 20/06/2018.
 //  Copyright © 2018 Jayanta Gogoi. All rights reserved.
 //
 
@@ -13,22 +13,42 @@ class ShoppingAppMockupTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
+     }
+    
+    func testLoginModel() {
+        let loginModel = LoginViewModel()
+
+        //check all components on ViewController
+        let loginVC = LoginViewController()
+        _ = loginVC.view
+        XCTAssertNotNil(loginVC.txtPassword)
+        XCTAssertNotNil(loginVC.txtUserName)
+        XCTAssertNotNil(loginVC.btnSignIn)
+        XCTAssertNotNil(loginVC.imgLogo)
+        XCTAssertNotNil(loginVC.imgLogo.image)
+        
+        //after login check expected credential
+        let credential = UserLogin(appAuth: "ADGFSDG4857346jhdtegg", userName: "someName", walletBalence: 0.0)
+        let validateResult = loginModel.validateLoginCredential(credential: credential)
+        XCTAssertTrue(validateResult, "Login success credential expectation failed")
+        
     }
     
-    
-   
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func testWebServices(){
+        
+        let webService = WebServicesAPI()
+        XCTAssertNotNil(webService.baseURL)
+        //check API URL rechability
+        webService.performPostrequest(endPoint: "", dict: NSMutableDictionary()) { response in
+            XCTAssertNotNil(response, "API Base Url is not reachable")
         }
+ 
     }
+    
+    
     
 }
