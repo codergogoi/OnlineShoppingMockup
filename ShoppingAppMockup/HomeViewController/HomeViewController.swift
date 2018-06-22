@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ShopingHomeViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class HomeViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     
     let identifier = "cellId"
@@ -26,6 +26,11 @@ class ShopingHomeViewController: UICollectionViewController, UICollectionViewDel
         collectionView?.register(HeaderCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerIdentifier)
         collectionView?.register(FooterCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: footerIdentifier)
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = false
     }
     
     func viewProductDetails(dataModel: ProductDataModel){

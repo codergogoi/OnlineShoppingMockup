@@ -24,6 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let rootViewController = UINavigationController(rootViewController: LoginViewController())
         window?.rootViewController = rootViewController
         
+        rootViewController.navigationBar.barTintColor = UIColor().appBG()
+ 
+        
         return true
     }
 

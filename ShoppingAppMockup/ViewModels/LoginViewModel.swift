@@ -61,8 +61,9 @@ class LoginViewModel : NSObject {
   
         self.loginCredential = UserLogin(appAuth: "AXSGY458736587ghds", userName: "Some UserName", walletBalence: 19.0)
         
-        handler(self.loginCredential)
-        
+        DispatchQueue.main.async {
+            handler(self.loginCredential)
+        }
     }
     
     

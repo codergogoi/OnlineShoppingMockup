@@ -90,6 +90,30 @@ extension UIView{
     
 }
 
+extension UIViewController{
+    
+    func showAlert(title: String?, msg: String?, ok: String, cancel: String?, onCancel: @escaping()->(), onOk: @escaping()->()){
+        
+        let controller = UIAlertController(title: title, message: msg, preferredStyle: .alert)
+        
+        if let cancel = cancel{
+            let cancelAction = UIAlertAction(title: cancel, style: .default, handler: { (acn) in
+                onCancel()
+            })
+            controller.addAction(cancelAction)
+        }
+        
+        let action = UIAlertAction(title: ok, style:.default, handler: { (okay) in
+            onOk()
+        })
+        controller.addAction(action)
+        
+        self.present(controller, animated: true, completion: nil)
+        
+    }
+    
+}
+
 
 extension String{
     

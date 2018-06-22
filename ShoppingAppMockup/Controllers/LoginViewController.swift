@@ -10,7 +10,7 @@ import UIKit
 
 
 
-class LoginViewController : UIViewController {
+class LoginViewController : UIViewController , UITextFieldDelegate{
     
     var loginViewModel : LoginViewModel!
     
@@ -62,6 +62,8 @@ class LoginViewController : UIViewController {
         view.addSubview(txtUserName)
         view.addSubview(txtPassword)
         view.addSubview(btnSignIn)
+        txtUserName.delegate = self
+        txtPassword.delegate = self
         
         view.addConstraintWithFormat(formate: "H:[v0(200)]", views: imgLogo)
         view.addConstraintWithFormat(formate: "H:|-50-[v0]-50-|", views: txtUserName)
@@ -77,6 +79,20 @@ class LoginViewController : UIViewController {
 
     }
     
+    //MARK: - TextField Delegate
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if textField == txtUserName {
+            txtPassword.becomeFirstResponder()
+            return false
+        }
+        
+        textField.resignFirstResponder()
+        
+        return true
+    }
+    
+    
     //MARK: - OnTap Actions
     @objc func onTapTextFields(_ textField: UITextField){
         textField.onTapEffect()
@@ -90,13 +106,27 @@ class LoginViewController : UIViewController {
         do {
             try loginViewModel.validateUserInputs(txtUserName: txtUserName, txtPassword: txtPassword)
         } catch AppError.invalidUserName {
-             print("Invalid User NAme")
+            
+            self.showAlert(title: "Login", msg: "Invalid User Name", ok: "OK", cancel: nil, onCancel: {
+                
+            }, onOk: {
+                
+            })
+            
             return
         }catch AppError.invalidEmail{
-            print("Invalid Password")
+            self.showAlert(title: "Login", msg: "Please provide a valid Email ID for User Name", ok: "OK", cancel: nil, onCancel: {
+                
+            }, onOk: {
+                
+            })
             return
         }catch AppError.invalidPassword{
-            print("Invalid Password")
+            self.showAlert(title: "Login", msg: "Invalid Password", ok: "OK", cancel: nil, onCancel: {
+                
+            }, onOk: {
+                
+            })
             return
         }catch{
             print("catch other error")
@@ -105,6 +135,10 @@ class LoginViewController : UIViewController {
         loginViewModel.performLoginAction("uid", "pwd") { loginResponse in
             if let response = loginResponse{
                 print("Login response \(response)")
+                
+                let homeVC = HomeViewController(collectionViewLayout: UICollectionViewFlowLayout())
+                self.navigationController?.pushViewController(homeVC, animated: true)
+                
             }else{
                 print("Login failed!")
             }

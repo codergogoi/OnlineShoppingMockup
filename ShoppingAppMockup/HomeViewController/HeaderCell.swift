@@ -10,7 +10,7 @@ import UIKit
 
 class HeaderCell: BaseCell {
     
-    weak var homeViewController: ShopingHomeViewController?
+    weak var homeViewController: HomeViewController?
     
     var pageController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     var pageControl = UIPageControl()
